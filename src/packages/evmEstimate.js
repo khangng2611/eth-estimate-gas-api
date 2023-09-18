@@ -1,7 +1,13 @@
 const {Web3} = require('web3');
 
-const provider = new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/49d40174ef234862b6b0be69b07cf4f9');
-const web3 = new Web3(provider);
+// let provider = new Web3.providers();
+// // let provider = new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/49d40174ef234862b6b0be69b07cf4f9');
+// let web3 = new Web3();
+
+function setProvider (HttpProvider) {
+  provider = new Web3.providers.HttpProvider(HttpProvider);
+  web3 = new Web3(provider);
+}
 
 async function getGasPrice() {
   const gasPrice = await web3.eth.getGasPrice()
@@ -61,7 +67,7 @@ function weiToEth (weiVaue) {
 //     console.log(`Estimated Gas: ${estimateGas}`);
 //   })
 
-module.exports = {getGasPrice, getEstimateGas, getEstimateGasFee, weiToEth}
+module.exports = {setProvider, getGasPrice, getEstimateGas, getEstimateGasFee, weiToEth}
 
 // INTERNAL TXN
 // const contractAddress = '0x1234567890123456789012345678901234567890';

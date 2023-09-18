@@ -4,4 +4,4 @@ WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install --production
 COPY . .
-CMD ["node", "app.js"]
+CMD ["node", "src/app.js"]
