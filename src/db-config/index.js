@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
+
+const mongoURL = process.env.MONGO_URL;
+const dbPort = process.env.DB_NAME;
 
 async function connect () {
     try {
-        await mongoose.connect('mongodb://18.140.62.59:27017/tram-connect');
+        await mongoose.connect(`${mongoURL}${dbPort}`);
         console.log("Successful Connection")
     } catch (error) {
         console.log("Failed Connection")

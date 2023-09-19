@@ -5,4 +5,4 @@ services:
     image: estimate_gas:latest
     build: ./
     ports: 
-      - '3000:3000'
+      - '4000:4000'
