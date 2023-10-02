@@ -1,0 +1,44 @@
+variables:
+  REGISTRY_ADDRESS: adminesollab/dev-repository
+  DOCKER_REGISTRY_USER: adminesollab
+  DOCKER_REGISTRY_TOKEN: dckr_pat_GkbSzsSj96ab1jsridnQtDrwUb0
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script: 
+    - docker login -u ${DOCKER_REGISTRY_USER} -p ${DOCKER_REGISTRY_TOKEN}
+
+    - docker build . -t ${REGISTRY_ADDRESS}:api-estimate-gas-${CI_COMMIT_SHORT_SHA} 
+    
+    - docker tag ${REGISTRY_ADDRESS}:api-estimate-gas-${CI_COMMIT_SHORT_SHA} ${REGISTRY_ADDRESS}:api-estimate-gas-latest
+    
+    - docker push ${REGISTRY_ADDRESS}:api-estimate-gas-${CI_COMMIT_SHORT_SHA}
+    
+    - docker push ${REGISTRY_ADDRESS}:api-estimate-gas-latest
+  only:
+    refs:
+      - stag
+  tags:
+    - build
+    - tram-wallet-build
+    - stag
+    
+deploy:
+  stage: deploy
+  script:
+    - cp /etc/gitlab-runner/ENV/api-estimate-gas/.env .
+    - docker login -u adminesollab -p ${DOCKER_REGISTRY_TOKEN}
+    - docker pull ${REGISTRY_ADDRESS}:api-estimate-gas-latest && \
+    - docker compose down && \
+    - docker compose up -d
+  only:
+    refs:
+      - stag
+  tags:
+    - deploy
+    - tram-wallet-deploy
+    - stag

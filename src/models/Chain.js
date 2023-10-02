@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { model } from 'mongoose';
+import { Schema } from 'mongoose';
 
-const Chain = new Schema({
+const ChainModel = new Schema({
   name: { type: String},
   logo: { type: String},
   evm: {type: Boolean},
@@ -11,4 +11,4 @@ const Chain = new Schema({
   scan: { type: String},
 });
 
-module.exports = mongoose.model('Chain', Chain);
+export const Chain = model('Chain', ChainModel);

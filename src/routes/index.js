@@ -1,14 +1,14 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+import bodyParser from 'body-parser';
+import * as gasController from '../controller/gasControlller.js';
 
-const bodyParser = require('body-parser');
+const router = Router();
+
 router.use(bodyParser.urlencoded({extended : true}));
 router.use(bodyParser.json() );
 
-const gasController = require('../controller/gasControlller.js');
+router.get('/gas-price', gasController.gasPrice);
+router.get('/estimate-gas', gasController.estimateGas);
+router.get('/estimate-gas-fee', gasController.estimateGasFee);
 
-router.get('/gasPrice', gasController.gasPrice);
-router.get('/estimateGas', gasController.estimateGas);
-router.get('/estimateGasFee', gasController.estimateGasFee);
-
-module.exports = router;
+export {router};

@@ -1,8 +1,12 @@
 version: '3'
 
 services:
-  api_estimate_gas:
-    image: estimate_gas:latest
+  api-estimate-gas:
+    image: adminesollab/dev-repository:api-estimate-gas-latest
+    env_file:
+      - .env
+    container_name: api-estimate-gas
     build: ./
-    ports: 
+    restart: always
+    ports:
       - '4000:4000'
